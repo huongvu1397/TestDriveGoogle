@@ -145,7 +145,7 @@ public class DriveServiceHelper {
         return Tasks.call(mExecutor, () ->
                 mDriveService.files().list()
                         .setSpaces("drive")
-                        .setFields("files/thumbnailLink, files/name, files/mimeType, files/id")
+                        .setFields("files/thumbnailLink")
 //                        .setQ("mimeType = 'image/jpeg' or mimeType = 'image/jpg'  or mimeType = 'image/png'")
                         .setQ("mimeType contains 'image/'")
                         .execute());
@@ -157,15 +157,40 @@ public class DriveServiceHelper {
             FileList result = null;
             try {
                 result = mDriveService.files().list()
-                        .setQ("mimeType='image/jpeg'")
+                        .setQ("mimeType='image/jpg'")
                         .setSpaces("drive")
                         .setFields("nextPageToken, files(id, name,thumbnailLink)")
                         .setPageToken(pageToken)
                         .execute();
+                Log.e("HVV1312","getAllImages file " + result.size() );
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e("HVV1312","getAllImages file " + result.size() );
+
+            for (File file : result.getFiles()) {
+                Log.e("HVV1312","getAllImages file id " + file.getId() + " get all name : "+file.getName() + " thumbnaikllink : "+file.getThumbnailLink());
+            }
+            pageToken = result.getNextPageToken();
+        } while (pageToken != null);
+    }
+
+    public void searchVideo(){
+        String pageToken = null;
+        do {
+            FileList result = null;
+            try {
+                result = mDriveService.files().list()
+                        .setQ("mimeType='video/mp4'")
+                        .setSpaces("drive")
+                        .setFields("nextPageToken, files(id, name,thumbnailLink)")
+                        .setPageToken(pageToken)
+                        .execute();
+                Log.e("HVV1312","getAllImages file " + result.size() );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             for (File file : result.getFiles()) {
                 Log.e("HVV1312","getAllImages file id " + file.getId() + " get all name : "+file.getName() + " thumbnaikllink : "+file.getThumbnailLink());
