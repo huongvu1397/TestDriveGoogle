@@ -219,6 +219,8 @@ class LoginActivity : AppCompatActivity() {
             Log.e("HVV1312","googleDrive 2 $drive")
             val request = drive?.files()?.get(fileId)
             request?.mediaHttpDownloader?.progressListener = CustomProgressListener()
+            request?.mediaHttpDownloader?.setProgressListener(CustomProgressListener())?.chunkSize = 1000000
+
             request?.executeMediaAndDownloadTo(outputStream2)
 
         }
