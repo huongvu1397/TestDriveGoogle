@@ -183,17 +183,17 @@ public class DriveServiceHelper {
                 result = mDriveService.files().list()
                         .setQ("mimeType='video/mp4'")
                         .setSpaces("drive")
-                        .setFields("nextPageToken, files(id, name,thumbnailLink)")
+                        .setFields("nextPageToken, files(id, name,thumbnailLink,size)")
                         .setPageToken(pageToken)
                         .execute();
-                Log.e("HVV1312","getAllImages file " + result.size() );
+                Log.e("HVV1312","getAllVideos file " + result.size() );
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             for (File file : result.getFiles()) {
-                Log.e("HVV1312","getAllImages file id " + file.getId() + " get all name : "+file.getName() + " thumbnaikllink : "+file.getThumbnailLink());
+                Log.e("HVV1312","getAllVideos file id " + file.getId() + " get all name : "+file.getName() + " thumbnaikllink : "+file.getThumbnailLink() + " size : "+file.getSize());
             }
             pageToken = result.getNextPageToken();
         } while (pageToken != null);

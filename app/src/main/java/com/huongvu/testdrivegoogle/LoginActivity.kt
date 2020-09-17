@@ -71,9 +71,9 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             try {
                 val result = GoogleSignIn.getSignedInAccountFromIntent(data).addOnSuccessListener {
-                    Log.e("HVV1312", " result success")
+                    Log.e("HVV1312", " GoogleSignIn.getSignedInAccountFromIntent(data) onSuccess")
                 }.addOnFailureListener {
-                    Log.e("HVV1312", " result fail")
+                    Log.e("HVV1312", " GoogleSignIn.getSignedInAccountFromIntent(data) onFail")
                 }.getResult(ApiException::class.java)
                 // Signed in successfully, show authenticated UI.
                 handleSignInResult(result)
@@ -199,31 +199,32 @@ class LoginActivity : AppCompatActivity() {
 //            mDriveServiceHelper?.searchImage()
 //        }
 
-//        GlobalScope.launch(Dispatchers.IO) {
-//            mDriveServiceHelper?.searchVideo()
-//        }
+        GlobalScope.launch(Dispatchers.IO) {
+            mDriveServiceHelper?.searchVideo()
+        }
 
        // val fileId = "1f0q3TzKN-ckkBeH_RwdwKQ7jfbuDXJw0"
-        val fileId = "1C61TE0roENGps3A5zoE4tJzQLX8YF3vz"
-        val outputStream: OutputStream = ByteArrayOutputStream()
-        val downloadDir = "${Environment.getExternalStorageDirectory()}/HVV/huongv2u.mp4"
-
-        val file = File(downloadDir)
-//        if (!file.exists()) {
-//            file.mkdir()
+//        val fileId = "1C61TE0roENGps3A5zoE4tJzQLX8YF3vz"
+//        val downloadDir = "${Environment.getExternalStorageDirectory()}/HVV"
+//
+//        val dir = File(downloadDir)
+//        if (!dir.exists()) {
+//            dir.mkdir()
 //        }
+        //val file = File("$dir/huongvu2.mp4")
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val outputStream2: OutputStream = FileOutputStream(file)
-            //getAllImages file id 1f0q3TzKN-ckkBeH_RwdwKQ7jfbuDXJw0 get all name : User.3.20.jpg thumbnaikllink : https://lh3.googleusercontent.com/G5DoLIVQyWNExhaZZcJZgH8WC4yPIUKQKkQ3PSUN1CRT_C5mewl8WzDV8YglvZgo5ewKfSmYWDg=s220
-            Log.e("HVV1312","googleDrive 2 $drive")
-            val request = drive?.files()?.get(fileId)
-            request?.mediaHttpDownloader?.progressListener = CustomProgressListener()
-            request?.mediaHttpDownloader?.setProgressListener(CustomProgressListener())?.chunkSize = 1000000
-
-            request?.executeMediaAndDownloadTo(outputStream2)
-
-        }
+        //test download
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val outputStream2: OutputStream = FileOutputStream(file)
+//            //getAllImages file id 1f0q3TzKN-ckkBeH_RwdwKQ7jfbuDXJw0 get all name : User.3.20.jpg thumbnaikllink : https://lh3.googleusercontent.com/G5DoLIVQyWNExhaZZcJZgH8WC4yPIUKQKkQ3PSUN1CRT_C5mewl8WzDV8YglvZgo5ewKfSmYWDg=s220
+//            Log.e("HVV1312","googleDrive 2 $drive")
+//            val request = drive?.files()?.get(fileId)
+//            request?.mediaHttpDownloader?.progressListener = CustomProgressListener()
+//            //request?.mediaHttpDownloader?.setProgressListener(CustomProgressListener())?.chunkSize = 10768770
+//            request?.mediaHttpDownloader?.setProgressListener(CustomProgressListener())?.chunkSize = 2076877
+//            Log.e("HVV1312","startDownload fileId : $fileId ")
+//            request?.executeMediaAndDownloadTo(outputStream2)
+//        }
 
         // nhớ xin cái này mới chọn search đc nhá
 //        if((exception is UserRecoverableAuthIOException)){
